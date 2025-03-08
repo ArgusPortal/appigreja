@@ -1,12 +1,13 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import 'react-native-reanimated';
-
+import { StatusBar } from 'expo-status-bar';
+import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
+import 'react-native-gesture-handler';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -15,7 +16,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '(drawer)',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -46,13 +47,43 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  // Customized dark theme for church app
+  const customDarkTheme = {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: Colors.dark.background,
+      card: Colors.dark.card,
+      text: Colors.dark.text,
+      border: Colors.dark.cardBorder,
+      primary: Colors.dark.primary,
+    },
+  };
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+    <ThemeProvider value={customDarkTheme}>
+      <StatusBar style="light" />
+      <Stack screenOptions={{
+        contentStyle: { backgroundColor: Colors.dark.background },
+        headerStyle: { 
+          backgroundColor: Colors.dark.background 
+        },
+        headerTintColor: Colors.dark.text,
+        headerShadowVisible: false,
+        animation: 'slide_from_right',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="modal" 
+          options={{ 
+            presentation: 'modal',
+            title: 'Notificações',
+            headerRight: () => null,
+          }} 
+        />
       </Stack>
     </ThemeProvider>
   );
