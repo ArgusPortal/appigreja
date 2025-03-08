@@ -176,7 +176,7 @@ export default function HomeScreen() {
           />
           <LinearGradient
             colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.8)']}
-            style={StyleSheet.absoluteFillObject}
+            style={StyleSheet.absoluteFillObject as any}
           />
           <Text style={styles.verse}>"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."</Text>
           <Text style={styles.verseReference}>João 3:16</Text>

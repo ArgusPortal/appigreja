@@ -1,11 +1,9 @@
 import { useCallback } from 'react';
 import { BackHandler, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
 
-/**
- * Fixes for common navigation issues
- */
+// Import types only to avoid runtime errors
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 
 /**
  * Helper hook for safe navigation with type checking
@@ -18,11 +16,15 @@ export function useSafeNavigation() {
     
     try {
       // For safety, wrap in try/catch
-      router.push(route as any);
+      router.push(route);
     } catch (error) {
       console.error('Navigation error:', error);
       // Fallback to basic navigation
-      router.navigate(route as never);
+      try {
+        router.navigate(route as never);
+      } catch (err) {
+        console.error('Fallback navigation failed:', err);
+      }
     }
   }, [router]);
   
@@ -32,10 +34,16 @@ export function useSafeNavigation() {
 /**
  * Utility to handle drawer opening in components
  */
-export function useDrawerToggle(navigation: DrawerNavigationProp<any> | undefined) {
+export function useDrawerToggle(navigation: any) {
   const openDrawer = useCallback(() => {
     if (navigation?.openDrawer) {
-      navigation.openDrawer();
+      try {
+        navigation.openDrawer();
+      } catch (error) {
+        console.error('Error opening drawer:', error);
+      }
+    } else {
+      console.warn('Drawer navigation is not available');
     }
   }, [navigation]);
   
@@ -49,19 +57,17 @@ export function useAndroidBackHandler(navigation: any) {
   const backAction = useCallback(() => {
     if (Platform.OS !== 'android') return false;
     
-    if (navigation?.canGoBack()) {
-      navigation.goBack();
-      return true;
+    try {
+      if (navigation?.canGoBack && typeof navigation.canGoBack === 'function' && navigation.canGoBack()) {
+        navigation.goBack();
+        return true;
+      }
+    } catch (error) {
+      console.error('Error handling back button:', error);
     }
     
     return false;
   }, [navigation]);
-  
-  // You can use this with useEffect in your screens
-  // useEffect(() => {
-  //   const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-  //   return () => backHandler.remove();
-  // }, [backAction]);
   
   return { backAction };
 }
