@@ -3,17 +3,21 @@ const path = require('path');
 const fs = require('fs');
 
 // Read app.json
-const appJsonPath = path.join(__dirname, './app.json');
-const appJsonContent = fs.readFileSync(appJsonPath, 'utf8');
-const appJson = JSON.parse(appJsonContent);
+let appJsonContent = {};
+try {
+  const appJsonPath = path.join(__dirname, './app.json');
+  appJsonContent = JSON.parse(fs.readFileSync(appJsonPath, 'utf8'));
+} catch (e) {
+  console.error('Error reading app.json:', e);
+}
 
 // Export config without wrapping in an extra expo property
 module.exports = {
-  ...appJson.expo,
-  // Add runtime overrides only if needed
+  ...(appJsonContent.expo || {}),
+  // Add runtime overrides, but filter out problematic plugins
   plugins: [
-    ...(appJson.expo.plugins || []),
-    "expo-router",
-    "react-native-gesture-handler"
+    ...((appJsonContent.expo && appJsonContent.expo.plugins) || [])
+      .filter(plugin => plugin !== 'react-native-gesture-handler'),
+    "expo-router"
   ]
 };
