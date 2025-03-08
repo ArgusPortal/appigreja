@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyleSheet, Image, Text, View } from 'react-native';
+import { StyleSheet, Image, Text, View, Platform } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
-// Custom drawer content component
+// Custom drawer content component with fixed insets handling
 function CustomDrawerContent(props: any) {
-  const insets = useSafeAreaInsets();
+  // Hard-coded padding values to avoid SafeAreaContext issues in bridgeless mode
+  const paddingTop = Platform.OS === 'ios' ? 44 : 24;
   
   // Map of route names to icon names
   const iconMap: Record<string, React.ComponentProps<typeof FontAwesome>['name']> = {
@@ -25,7 +25,7 @@ function CustomDrawerContent(props: any) {
   return (
     <DrawerContentScrollView
       {...props}
-      contentContainerStyle={[styles.drawerContentContainer, {paddingTop: insets.top}]}
+      contentContainerStyle={[styles.drawerContentContainer, {paddingTop}]}
     >
       {/* Drawer Header */}
       <LinearGradient
@@ -48,31 +48,24 @@ function CustomDrawerContent(props: any) {
         const iconName = iconMap[route.name] || 'circle';
         
         return (
-          <View
+          <DrawerItem
             key={route.key}
-            style={[
-              styles.drawerItem,
-              isFocused && styles.drawerItemFocused,
-            ]}
-          >
-            <FontAwesome 
-              name={iconName}
-              size={22}
-              color={isFocused ? Colors.dark.secondary : '#888888'}
-              style={styles.drawerItemIcon}
-            />
-            <Text 
-              style={[
-                styles.drawerItemLabel,
-                isFocused && styles.drawerItemLabelFocused
-              ]}
-              onPress={() => {
-                props.navigation.navigate(route.name);
-              }}
-            >
-              {label}
-            </Text>
-          </View>
+            label={label}
+            focused={isFocused}
+            onPress={() => props.navigation.navigate(route.name)}
+            icon={({color, size}) => (
+              <FontAwesome 
+                name={iconName} 
+                size={size} 
+                color={isFocused ? Colors.dark.secondary : '#888888'} 
+              />
+            )}
+            activeTintColor={Colors.dark.secondary}
+            inactiveTintColor="#888888"
+            activeBackgroundColor={Colors.dark.card}
+            style={styles.drawerItem}
+            labelStyle={styles.drawerItemLabel}
+          />
         );
       })}
     </DrawerContentScrollView>
@@ -98,6 +91,8 @@ export default function DrawerLayout() {
         swipeEnabled: true,
         drawerType: "front",
         overlayColor: 'rgba(0,0,0,0.7)',
+        // Add these options for better performance
+        lazy: false
       }}
     >
       <Drawer.Screen
@@ -182,25 +177,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   drawerItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
+    marginHorizontal: 4,
     marginVertical: 2,
-    marginHorizontal: 8,
     borderRadius: 8,
-  },
-  drawerItemFocused: {
-    backgroundColor: Colors.dark.card,
-  },
-  drawerItemIcon: {
-    marginRight: 12,
   },
   drawerItemLabel: {
     fontSize: 16,
-    color: '#888888',
-  },
-  drawerItemLabelFocused: {
-    color: Colors.dark.secondary,
-    fontWeight: '600',
-  },
+    fontWeight: '400',
+  }
 });

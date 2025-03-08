@@ -3,7 +3,7 @@ import { Text, View } from '@/components/Themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
-import { useRouter } from 'expo-router';
+import { useSafeNavigation } from '@/utils/navigationUtils';
 
 const { width } = Dimensions.get('window');
 
@@ -17,12 +17,11 @@ interface MenuCardProps {
 }
 
 const MenuCard = ({ icon, title, subtitle, route, onPress }: MenuCardProps) => {
-  const router = useRouter();
+  const { navigate } = useSafeNavigation();
   
   const handlePress = () => {
     if (route) {
-      // Fixed: Added type safety to router.push
-      router.push(route as any);
+      navigate(route);
     } else if (onPress) {
       onPress();
     }
@@ -41,13 +40,13 @@ const MenuCard = ({ icon, title, subtitle, route, onPress }: MenuCardProps) => {
 
 // Componente para o próximo evento em destaque
 const UpcomingEvent = () => {
-  const router = useRouter();
+  const { navigate } = useSafeNavigation();
   
   return (
     <TouchableOpacity 
       activeOpacity={0.8} 
       style={styles.eventCard} 
-      onPress={() => router.push('/two')}
+      onPress={() => navigate('/two')}
     >
       <LinearGradient
         colors={[Colors.dark.primary + '40', Colors.dark.primary + '20']}
@@ -95,7 +94,7 @@ const LiveBanner = () => (
 );
 
 export default function HomeScreen() {
-  const router = useRouter();
+  const { navigate } = useSafeNavigation();
   
   return (
     <ScrollView style={styles.scrollView}>
@@ -123,7 +122,7 @@ export default function HomeScreen() {
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Próximos Eventos</Text>
-          <TouchableOpacity onPress={() => router.push('/two')}>
+          <TouchableOpacity onPress={() => navigate('/two')}>
             <Text style={styles.seeAllLink}>Ver todos</Text>
           </TouchableOpacity>
         </View>

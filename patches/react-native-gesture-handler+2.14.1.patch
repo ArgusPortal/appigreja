@@ -1,0 +1,28 @@
+diff --git a/node_modules/react-native-gesture-handler/src/PanGestureHandler.ts b/node_modules/react-native-gesture-handler/src/PanGestureHandler.ts
+new file mode 100644
+index 0000000..c6876fc
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/src/PanGestureHandler.ts
+@@ -0,0 +1,21 @@
++import { PropsWithChildren } from 'react';
++import {
++  BaseGestureHandlerProps,
++  NativeViewGestureHandlerProps, // Add this import
++  BaseGestureHandlerWithMonitorProps,
++} from './handlers/gestureHandlerCommon';
++import { AnchorPoint } from './handlers/gestureHandlerCommon';
++
++// ...existing code...
++
++export interface PanGestureHandlerProps extends BaseGestureHandlerProps<PanGestureHandler> {
++  // ...existing code...
++  activateAfterLongPress?: number;
++}
++
++// Modify this type definition to add the modalize property
++export type PanGestureHandlerType = typeof PanGestureHandler & Constructor<PanGestureHandler> 
++  & { modalize: (props: PropsWithChildren<PanGestureHandlerProps & NativeViewGestureHandlerProps>) => JSX.Element };
++
++export const PanGestureHandler = BaseGestureHandler<
++  // ...existing code...
+\ No newline at end of file
