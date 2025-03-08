@@ -5,9 +5,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Custom drawer content component
 function CustomDrawerContent(props: any) {
+  const insets = useSafeAreaInsets();
+  
   // Map of route names to icon names
   const iconMap: Record<string, React.ComponentProps<typeof FontAwesome>['name']> = {
     'index': 'home',
@@ -22,7 +25,7 @@ function CustomDrawerContent(props: any) {
   return (
     <DrawerContentScrollView
       {...props}
-      contentContainerStyle={styles.drawerContentContainer}
+      contentContainerStyle={[styles.drawerContentContainer, {paddingTop: insets.top}]}
     >
       {/* Drawer Header */}
       <LinearGradient

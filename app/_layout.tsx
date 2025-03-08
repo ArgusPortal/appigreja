@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';  // This MUST be the first import
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -7,7 +8,7 @@ import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
-import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -61,30 +62,32 @@ function RootLayoutNav() {
   };
 
   return (
-    <ThemeProvider value={customDarkTheme}>
-      <StatusBar style="light" />
-      <Stack screenOptions={{
-        contentStyle: { backgroundColor: Colors.dark.background },
-        headerStyle: { 
-          backgroundColor: Colors.dark.background 
-        },
-        headerTintColor: Colors.dark.text,
-        headerShadowVisible: false,
-        animation: 'slide_from_right',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}>
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        <Stack.Screen 
-          name="modal" 
-          options={{ 
-            presentation: 'modal',
-            title: 'Notificações',
-            headerRight: () => null,
-          }} 
-        />
-      </Stack>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={customDarkTheme}>
+        <StatusBar style="light" />
+        <Stack screenOptions={{
+          contentStyle: { backgroundColor: Colors.dark.background },
+          headerStyle: { 
+            backgroundColor: Colors.dark.background 
+          },
+          headerTintColor: Colors.dark.text,
+          headerShadowVisible: false,
+          animation: 'slide_from_right',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}>
+          <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+          <Stack.Screen 
+            name="modal" 
+            options={{ 
+              presentation: 'modal',
+              title: 'Notificações',
+              headerRight: () => null,
+            }} 
+          />
+        </Stack>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
