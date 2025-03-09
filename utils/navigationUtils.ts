@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { BackHandler, Platform } from 'react-native';
-import { useRouter } from 'expo-router';
+import { BackHandler, Platform, Alert } from 'react-native';
+import { useRouter, usePathname } from 'expo-router';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 
 /**
@@ -12,21 +12,44 @@ import type { DrawerNavigationProp } from '@react-navigation/drawer';
  */
 export function useSafeNavigation() {
   const router = useRouter();
+  const pathname = usePathname();
   
   const navigate = useCallback((route: string) => {
     if (!route) return;
     
+    // Don't navigate to the same route
+    if (pathname === route) return;
+    
     try {
-      // For safety, wrap in try/catch
-      router.push(route as any);
+      if (route.startsWith('/')) {
+        router.push(route);
+      } else {
+        // Para rotas sem barra, adicione uma
+        router.push('/' + route);
+      }
     } catch (error) {
       console.error('Navigation error:', error);
       // Fallback to basic navigation
-      router.navigate(route as never);
+      try {
+        router.navigate(route as never);
+      } catch (navError) {
+        console.error('Fallback navigation failed:', navError);
+      }
     }
-  }, [router]);
+  }, [router, pathname]);
   
-  return { navigate };
+  const navigateWithConfirmation = useCallback((route: string, message: string = 'Tem certeza que deseja sair desta página?') => {
+    Alert.alert(
+      'Confirmação',
+      message,
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Sim', onPress: () => navigate(route) }
+      ]
+    );
+  }, [navigate]);
+  
+  return { navigate, navigateWithConfirmation };
 }
 
 /**

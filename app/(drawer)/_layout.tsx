@@ -5,27 +5,42 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// Custom drawer content component with fixed insets handling
+// Custom drawer content component with proper safe area handling
 function CustomDrawerContent(props: any) {
-  // Hard-coded padding values to avoid SafeAreaContext issues in bridgeless mode
-  const paddingTop = Platform.OS === 'ios' ? 44 : 24;
+  // Get safe area insets
+  const insets = useSafeAreaInsets();
   
-  // Map of route names to icon names
-  const iconMap: Record<string, React.ComponentProps<typeof FontAwesome>['name']> = {
-    'index': 'home',
-    'bible': 'book',
-    'two': 'calendar',
-    'community': 'users',
-    'devotional': 'heart',
-    'offerings': 'dollar',
-    'location': 'map-marker'
+  // Determinando um padding seguro baseado na plataforma
+  const safePaddingTop = Platform.select({
+    ios: Math.max(insets.top, 20),
+    android: Math.max(insets.top, 16),
+    default: 20
+  });
+  
+  // Mapeamento seguro de ícones
+  const getIconName = (routeName: string): React.ComponentProps<typeof FontAwesome>['name'] => {
+    const iconMap: Record<string, React.ComponentProps<typeof FontAwesome>['name']> = {
+      'index': 'home',
+      'bible': 'book',
+      'two': 'calendar',
+      'community': 'users',
+      'devotional': 'heart',
+      'offerings': 'dollar',
+      'location': 'map-marker'
+    };
+    
+    return iconMap[routeName] || 'circle';
   };
 
   return (
     <DrawerContentScrollView
       {...props}
-      contentContainerStyle={[styles.drawerContentContainer, {paddingTop}]}
+      contentContainerStyle={[
+        styles.drawerContentContainer, 
+        { paddingTop: safePaddingTop }
+      ]}
     >
       {/* Drawer Header */}
       <LinearGradient
@@ -45,7 +60,7 @@ function CustomDrawerContent(props: any) {
         const { options } = props.descriptors[route.key];
         const label = options.drawerLabel || options.title || route.name;
         const isFocused = props.state.index === index;
-        const iconName = iconMap[route.name] || 'circle';
+        const iconName = getIconName(route.name);
         
         return (
           <DrawerItem
@@ -92,7 +107,7 @@ export default function DrawerLayout() {
         drawerType: "front",
         overlayColor: 'rgba(0,0,0,0.7)',
         // Add these options for better performance
-        lazy: false
+        lazy: false,
       }}
     >
       <Drawer.Screen
@@ -151,7 +166,6 @@ export default function DrawerLayout() {
 const styles = StyleSheet.create({
   drawerContentContainer: {
     flex: 1,
-    paddingTop: 0,
   },
   drawerHeader: {
     padding: 20,

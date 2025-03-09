@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { useSafeNavigation } from '@/utils/navigationUtils';
+import React, { useCallback } from 'react';
 
 const { width } = Dimensions.get('window');
 
@@ -19,16 +20,22 @@ interface MenuCardProps {
 const MenuCard = ({ icon, title, subtitle, route, onPress }: MenuCardProps) => {
   const { navigate } = useSafeNavigation();
   
-  const handlePress = () => {
+  const handlePress = useCallback(() => {
     if (route) {
       navigate(route);
     } else if (onPress) {
       onPress();
     }
-  };
+  }, [route, onPress, navigate]);
   
   return (
-    <TouchableOpacity style={styles.card} onPress={handlePress} activeOpacity={0.7}>
+    <TouchableOpacity 
+      style={styles.card} 
+      onPress={handlePress} 
+      activeOpacity={0.7}
+      accessibilityLabel={title}
+      accessibilityHint={subtitle}
+    >
       <FontAwesome name={icon} size={24} color={Colors.dark.secondary} style={styles.cardIcon} />
       <View style={styles.cardTextContainer}>
         <Text style={styles.cardTitle}>{title}</Text>

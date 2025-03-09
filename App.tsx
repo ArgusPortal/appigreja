@@ -1,21 +1,28 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, Platform } from 'react-native';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
-// Import Slot from expo-router
-let Slot = null;
+// Import Slot from expo-router with redundant error handling
+let Slot: React.ComponentType<{ children?: React.ReactNode }> | null = null;
+let Router: any = null;
 try {
-  const Router = require('expo-router');
+  Router = require('expo-router');
   Slot = Router.Slot;
+  
+  // Secondary check para maior segurança
+  if (!Slot && Router) {
+    console.warn('Router loaded but Slot is undefined, trying fallback');
+    // Tente usar um componente de fallback se Slot não estiver disponível
+    Slot = ({ children }) => <>{children}</>;
+  }
 } catch (error) {
-  console.error('Failed to import Slot from expo-router:', error);
+  console.error('Failed to import expo-router components:', error);
 }
 
 // Simple theme object to avoid import dependency issues
@@ -30,8 +37,25 @@ const Colors = {
 };
 
 // Simple error boundary component to catch runtime errors
-function ErrorBoundary({ children }) {
+function ErrorBoundary({ children }: { children: React.ReactNode }) {
   const [hasError, setHasError] = useState(false);
+  
+  // Add error handling with useEffect to catch and set errors
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const errorHandler = (error: ErrorEvent) => {
+        console.error('Caught error:', error);
+        setHasError(true);
+        return true;
+      };
+      
+      window.addEventListener('error', errorHandler);
+      return () => window.removeEventListener('error', errorHandler);
+    }
+    
+    // Para plataformas nativas, usamos um tratamento diferente
+    return () => {};
+  }, []);
   
   if (hasError) {
     return (
@@ -43,11 +67,7 @@ function ErrorBoundary({ children }) {
     );
   }
   
-  return (
-    <React.Fragment>
-      {children}
-    </React.Fragment>
-  );
+  return <>{children}</>;
 }
 
 // Prevent the splash screen from auto hiding

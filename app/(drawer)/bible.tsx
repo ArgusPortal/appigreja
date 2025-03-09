@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity, TextInput, View as RNView } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
@@ -15,12 +15,32 @@ const bibleBooks = [
 ];
 
 // Componente para botões de navegação rápida
-const QuickNavButton = ({ title, icon, onPress }: { title: string, icon: string, onPress: () => void }) => (
-  <TouchableOpacity style={styles.quickNavButton} onPress={onPress}>
-    <FontAwesome name={icon as any} size={18} color={Colors.dark.secondary} />
-    <Text style={styles.quickNavText}>{title}</Text>
-  </TouchableOpacity>
-);
+const QuickNavButton = ({ title, icon, onPress }: { title: string, icon: string, onPress: () => void }) => {
+  // Segurança de tipo mais robusta para ícones FontAwesome
+  let iconName: keyof typeof FontAwesome.glyphMap;
+  
+  // Lista segura de ícones conhecidos disponíveis
+  const safeIcons = ['star', 'history', 'pencil', 'book', 'search', 'bookmark', 'circle'] as const;
+  
+  // Verifica se o ícone solicitado existe na lista segura
+  if (safeIcons.includes(icon as any)) {
+    iconName = icon as keyof typeof FontAwesome.glyphMap;
+  } else {
+    console.warn(`Ícone seguro não disponível: ${icon}`);
+    iconName = 'circle'; // Fallback para um ícone garantido
+  }
+  
+  return (
+    <TouchableOpacity 
+      style={styles.quickNavButton} 
+      onPress={onPress}
+      accessibilityLabel={title}
+    >
+      <FontAwesome name={iconName} size={18} color={Colors.dark.secondary} />
+      <Text style={styles.quickNavText}>{title}</Text>
+    </TouchableOpacity>
+  );
+};
 
 export default function Bible() {
   const [searchTerm, setSearchTerm] = useState('');
