@@ -22,10 +22,10 @@ export function useSafeNavigation() {
     
     try {
       if (route.startsWith('/')) {
-        router.push(route);
+        router.push(route as any);
       } else {
         // Para rotas sem barra, adicione uma
-        router.push('/' + route);
+        router.push(('/' + route) as any);
       }
     } catch (error) {
       console.error('Navigation error:', error);
