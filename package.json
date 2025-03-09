@@ -9,12 +9,24 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "cleanup": "rimraf node_modules && npm install --legacy-peer-deps",
-    "postinstall": "patch-package",
+    "postinstall": "patch-package && node scripts/check-babel-deps.js",
     "fix-deps": "npx expo install --check",
     "clear-metro": "rimraf .metro-cache node_modules/.cache .expo && node scripts/setup-router-shims.js",
     "start-clean": "npm run clear-metro && set EXPO_PLATFORM=web && expo start --web --clear",
     "web-clean": "set EXPO_PLATFORM=web && expo start --web --clear --no-dev",
-    "setup-shims": "node ./scripts/setup-router-shims.js"
+    "setup-shims": "node ./scripts/setup-router-shims.js",
+    "android-clean": "rimraf .metro-cache node_modules/.cache .expo && npm run android",
+    "android-dev": "expo start --android --dev-client",
+    "build-android": "eas build --platform android --profile development",
+    "doctor": "expo doctor",
+    "rebuild": "expo prebuild --clean && npm run android",
+    "babel-fix": "node scripts/check-babel-deps.js",
+    "android-deep-clean": "rimraf node_modules/.cache .expo .metro-cache && npm run android",
+    "fix-react-native": "node scripts/fix-react-native.js && rimraf node_modules/.cache .expo .metro-cache",
+    "reset-android": "rimraf .expo node_modules/.cache .metro-cache && node scripts/fix-react-native.js && npm run android",
+    "fix-expo-deps": "node scripts/check-expo-deps.js && rimraf node_modules/.cache .expo .metro-cache",
+    "expo-reinstall": "npm uninstall expo-linking && npm install expo-linking@7.0.5 --save-exact && npm run fix-expo-deps",
+    "android-full-reset": "npm run fix-react-native && npm run fix-expo-deps && npm run babel-fix && npm run android-deep-clean"
   },
   "jest": {
     "preset": "jest-expo"
@@ -30,7 +42,7 @@
     "expo": "~52.0.0",
     "expo-font": "~13.0.0",
     "expo-linear-gradient": "~14.0.0",
-    "expo-linking": "~7.0.0",
+    "expo-linking": "7.0.5",
     "expo-router": "^4.0.0",
     "expo-splash-screen": "~0.29.0",
     "expo-status-bar": "~2.0.0",
@@ -67,7 +79,8 @@
   "resolutions": {
     "react-native-reanimated": "~3.6.0",
     "react-native-screens": "~3.29.0",
-    "react-native-gesture-handler": "~2.14.0"
+    "react-native-gesture-handler": "~2.14.0",
+    "@babel/runtime": "^7.26.9"
   },
   "private": true
 }

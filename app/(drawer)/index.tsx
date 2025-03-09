@@ -1,10 +1,11 @@
-import { StyleSheet, ImageBackground, TouchableOpacity, ScrollView, Image, Dimensions } from 'react-native';
+import { StyleSheet, ImageBackground, TouchableOpacity, ScrollView, Image, Dimensions, Platform } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { useSafeNavigation } from '@/utils/navigationUtils';
 import React, { useCallback } from 'react';
+import { useAndroidBackHandler } from '@/utils/androidBackHandler';
 
 const { width } = Dimensions.get('window');
 
@@ -102,6 +103,9 @@ const LiveBanner = () => (
 
 export default function HomeScreen() {
   const { navigate } = useSafeNavigation();
+  
+  // Aplicar o handler para mostrar diálogo de confirmação ao sair do app
+  useAndroidBackHandler(undefined, true);
   
   return (
     <ScrollView style={styles.scrollView}>

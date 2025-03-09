@@ -104,10 +104,14 @@ export default function DrawerLayout() {
           width: 280,
         },
         swipeEnabled: true,
-        drawerType: "front",
+        drawerType: Platform.OS === 'android' ? "front" : "slide",
         overlayColor: 'rgba(0,0,0,0.7)',
-        // Add these options for better performance
+        // Add these options for better performance on Android
         lazy: false,
+        // Configurações de animação específicas para Android
+        drawerStatusBarAnimation: 'slide',
+        // Melhorando a performance em Android
+        keyboardDismissMode: 'on-drag',
       }}
     >
       <Drawer.Screen

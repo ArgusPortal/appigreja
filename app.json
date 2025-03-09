@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "appigreja",
+    "name": "Igreja Batista Renovada",
     "slug": "appigreja",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,16 +11,23 @@
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#121212"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.igrejabatista.renovada",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "softwareKeyboardLayoutMode": "pan",
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +43,7 @@
     },
     "packagerOpts": {
       "sourceExts": ["js", "jsx", "ts", "tsx", "cjs", "mjs"]
-    }
+    },
+    "jsEngine": "hermes"
   }
 }
