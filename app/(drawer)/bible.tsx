@@ -15,17 +15,9 @@ const bibleBooks = [
 ];
 
 // Componente para botões de navegação rápida
-const QuickNavButton = ({ 
-  title, 
-  icon, 
-  onPress 
-}: { 
-  title: string, 
-  icon: React.ComponentProps<typeof FontAwesome>['name'], 
-  onPress: () => void 
-}) => (
+const QuickNavButton = ({ title, icon, onPress }: { title: string, icon: string, onPress: () => void }) => (
   <TouchableOpacity style={styles.quickNavButton} onPress={onPress}>
-    <FontAwesome name={icon} size={18} color={Colors.dark.secondary} />
+    <FontAwesome name={icon as any} size={18} color={Colors.dark.secondary} />
     <Text style={styles.quickNavText}>{title}</Text>
   </TouchableOpacity>
 );

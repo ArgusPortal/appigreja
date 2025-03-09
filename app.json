@@ -33,6 +33,9 @@
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true
+    },
+    "packagerOpts": {
+      "sourceExts": ["js", "jsx", "ts", "tsx", "cjs", "mjs"]
     }
   }
 }

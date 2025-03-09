@@ -1,14 +1,13 @@
-import 'react-native-gesture-handler';
 import React from 'react';
 import { StyleSheet, Image, Text, View, Platform } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
-import { DrawerContentScrollView, DrawerItem, DrawerContentComponentProps } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 
 // Custom drawer content component with fixed insets handling
-function CustomDrawerContent(props: DrawerContentComponentProps) {
+function CustomDrawerContent(props: any) {
   // Hard-coded padding values to avoid SafeAreaContext issues in bridgeless mode
   const paddingTop = Platform.OS === 'ios' ? 44 : 24;
   
@@ -42,21 +41,16 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       </LinearGradient>
 
       {/* Drawer Items */}
-      {props.state.routes.map((route, index) => {
+      {props.state.routes.map((route: any, index: number) => {
         const { options } = props.descriptors[route.key];
-        const label = options.drawerLabel !== undefined 
-          ? options.drawerLabel 
-          : options.title !== undefined
-          ? options.title
-          : route.name;
-          
+        const label = options.drawerLabel || options.title || route.name;
         const isFocused = props.state.index === index;
         const iconName = iconMap[route.name] || 'circle';
         
         return (
           <DrawerItem
             key={route.key}
-            label={typeof label === 'string' ? label : route.name}
+            label={label}
             focused={isFocused}
             onPress={() => props.navigation.navigate(route.name)}
             icon={({color, size}) => (

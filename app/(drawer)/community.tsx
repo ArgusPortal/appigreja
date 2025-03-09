@@ -3,7 +3,6 @@ import { StyleSheet, FlatList, TouchableOpacity, Image, ScrollView } from 'react
 import { Text, View } from '@/components/Themed';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
-import 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Dados simulados de grupos da igreja
@@ -113,7 +112,6 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 16,
-    backgroundColor: 'transparent',
   },
   headerGradient: {
     padding: 24,
