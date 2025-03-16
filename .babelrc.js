@@ -14,7 +14,7 @@ module.exports = function(api) {
             'constants': './constants',
             'expo-router': './node_modules/expo-router',
             'entry.js': './entry.js',
-            'expo-router/entry': './node_modules/expo-router/entry.js'
+            'expo-router/entry': './entry.js'
           },
           extensions: [
             '.js',

@@ -1,0 +1,31 @@
+diff --git a/node_modules/react-native-safe-area-context/src/SafeAreaContext.tsx b/node_modules/react-native-safe-area-context/src/SafeAreaContext.tsx
+index 8295656..ff9c701 100644
+--- a/node_modules/react-native-safe-area-context/src/SafeAreaContext.tsx
++++ b/node_modules/react-native-safe-area-context/src/SafeAreaContext.tsx
+@@ -4,7 +4,7 @@ import * as React from 'react';
+ import {
+   Dimensions,
+   StyleSheet,
+-  ViewProps,
++  ViewProps, Platform,
+ } from 'react-native';
+ import NativeSafeAreaProvider from './NativeSafeAreaProvider';
+ import { EdgeInsets, InsetChangedEvent, Metrics } from './SafeArea.types';
+@@ -35,6 +35,17 @@ export function SafeAreaProvider({
+   children,
+   ...others
+ }: SafeAreaProviderProps): JSX.Element {
++  // Fix for topInsetsChange error - use static insets on Android
++  if (Platform.OS === 'android') {
++    const staticInsets = {
++      top: 24,
++      right: 0,
++      bottom: 0,
++      left: 0,
++    };
++    return React.createElement(SafeAreaInsetsContext.Provider, { value: staticInsets }, children);
++  }
++  
+   const parentInsets = useParentInsets();
+   const [insets, setInsets] = React.useState<EdgeInsets | null>(null);
+   const [metrics, setMetrics] = React.useState<Metrics | null>(null);
