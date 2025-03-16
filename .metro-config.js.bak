@@ -389,8 +389,8 @@ const styles = StyleSheet.create({
   }
   
   // IMPORTANTE: Metro espera um objeto com uma propriedade 'type' OU undefined (não null)
-  // Se retornar null, o Metro tentará acessar resolution.type e causará erro
-  return undefined; // Corrigido de "null" para "undefined"
+  // Retornar undefined permite que o Metro use seu próprio algoritmo de resolução
+  return undefined; // Modificado de null para undefined
 };
 
 // Log de configuração

@@ -1,0 +1,8 @@
+{
+  "ignore_dirs": [
+    ".git",
+    "node_modules/react-native/node_modules"
+  ],
+  "fsevents_latency": 0.05,
+  "root_files": true
+}
