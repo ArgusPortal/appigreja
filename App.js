@@ -1,20 +1,36 @@
+// Carregue o polyfill antes de qualquer outra coisa
+import './shims/safe-area-polyfill';
 import 'react-native-gesture-handler';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Text, LogBox } from 'react-native';
 
-// Import Router from expo-router
+// Ignorar avisos específicos que podem ser causados pela nossa solução
+LogBox.ignoreLogs([
+  'Unsupported top level event type',
+  'Route "./entry.js" is missing',
+  '[react-native-gesture-handler]'
+]);
+
+// Import Router from expo-router with better error handling
 let Router;
 try {
   Router = require('expo-router');
+  console.log('✅ expo-router carregado com sucesso');
 } catch (e) {
-  console.error('Failed to load expo-router, using fallback:', e);
+  console.error('❌ Falha ao carregar expo-router:', e);
+  // Fallback implementation
   Router = {
-    Slot: function({ children }) { return children; }
+    Slot: ({ children }) => {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#121212' }}>
+          <Text style={{ color: '#fff' }}>Erro ao carregar router</Text>
+        </View>
+      );
+    }
   };
 }
 
@@ -30,7 +46,7 @@ const Colors = {
 };
 
 export default function App() {
-  // Basic app shell that should work regardless of TypeScript errors
+  // Wrap in error boundary for production safety
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>

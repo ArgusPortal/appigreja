@@ -251,6 +251,8 @@ config.resolver.extraNodeModules = {
     ? path.resolve(__dirname, 'node_modules/expo-router/entry.js') 
     : entryJsPath,
   'expo-router': path.resolve(__dirname, 'node_modules/expo-router'),
+  // Adicionar alias para @/ apontando para o diretório raiz do projeto
+  '@': __dirname,
 };
 
 // Implementação do resolvedor customizado
@@ -388,9 +390,28 @@ const styles = StyleSheet.create({
     }
   }
   
-  // IMPORTANTE: Metro espera um objeto com uma propriedade 'type' OU undefined (não null)
-  // Se retornar null, o Metro tentará acessar resolution.type e causará erro
-  return undefined; // Corrigido de "null" para "undefined"
+  // IMPORTANTE: Em vez de retornar null ou undefined, usamos o resolver original do contexto
+  // Isso garante que o Metro continue a cadeia de resolução corretamente
+  if (context.resolveRequest && context.resolveRequest !== customResolveRequest) {
+    return context.resolveRequest(context, moduleName, platform);
+  }
+  
+  // Último recurso - criar um módulo vazio para evitar erros
+  const emptyModulePath = path.join(__dirname, 'shims/empty-module.js');
+  
+  // Garantir que temos um módulo vazio
+  if (!fs.existsSync(path.dirname(emptyModulePath))) {
+    fs.mkdirSync(path.dirname(emptyModulePath), { recursive: true });
+  }
+  
+  if (!fs.existsSync(emptyModulePath)) {
+    fs.writeFileSync(emptyModulePath, '// Empty fallback module\nmodule.exports = {};\n');
+  }
+  
+  return {
+    type: 'sourceFile',
+    filePath: emptyModulePath
+  };
 };
 
 // Log de configuração

@@ -2,22 +2,17 @@ import React from 'react';
 import { StyleSheet, Image, Text, View, Platform } from 'react-native';
 import { Drawer } from 'expo-router/drawer';
 import { FontAwesome } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
+// Corrigir o caminho de importação - usar um caminho relativo se o alias não funcionar
+import Colors from '../../constants/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Custom drawer content component with proper safe area handling
 function CustomDrawerContent(props: any) {
-  // Get safe area insets
-  const insets = useSafeAreaInsets();
-  
-  // Determinando um padding seguro baseado na plataforma
-  const safePaddingTop = Platform.select({
-    ios: Math.max(insets.top, 20),
-    android: Math.max(insets.top, 16),
-    default: 20
-  });
+  // Use static values instead of useSafeAreaInsets to avoid issues
+  // This completely removes dependency on the problematic API
+  const safePaddingTop = Platform.OS === 'ios' ? 44 : 16;
   
   // Mapeamento seguro de ícones
   const getIconName = (routeName: string): React.ComponentProps<typeof FontAwesome>['name'] => {
