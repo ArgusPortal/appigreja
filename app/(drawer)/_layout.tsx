@@ -41,10 +41,10 @@ function CustomDrawerContent(props: any) {
         style={styles.drawerHeader}
       >
         <Image
-          source={{ uri: 'https://placekitten.com/100/100' }}
+          source={require('../../assets/images/church-logo.png')}
           style={styles.churchLogo}
         />
-        <Text style={styles.churchName}>Igreja Batista Renovada</Text>
+        <Text style={styles.churchName}>Igreja Batista da Cidade</Text>
         <Text style={styles.churchMotto}>Fé, Renovação e Esperança</Text>
       </LinearGradient>
 
@@ -110,7 +110,7 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="index"
         options={{
-          title: "Igreja Batista Renovada",
+          title: "Igreja Batista da Cidade",
           drawerLabel: "Início"
         }}
       />

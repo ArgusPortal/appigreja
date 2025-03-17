@@ -19,11 +19,11 @@ export default function OfferingsScreen() {
           <FontAwesome name="bank" size={24} color={Colors.dark.secondary} style={styles.methodIcon} />
           <View style={styles.methodDetails}>
             <Text style={styles.methodTitle}>Transferência Bancária</Text>
-            <Text style={styles.methodInfo}>Banco: 000 - Banco ABC</Text>
-            <Text style={styles.methodInfo}>Agência: 0001</Text>
-            <Text style={styles.methodInfo}>Conta: 12345-6</Text>
-            <Text style={styles.methodInfo}>Igreja Batista Renovada</Text>
-            <Text style={styles.methodInfo}>CNPJ: 00.000.000/0001-00</Text>
+            <Text style={styles.methodInfo}>Banco Itaú</Text>
+            <Text style={styles.methodInfo}>Agência: 1628</Text>
+            <Text style={styles.methodInfo}>Conta: 75655-1</Text>
+            <Text style={styles.methodInfo}>Igreja Batista da Cidade</Text>
+            <Text style={styles.methodInfo}>CNPJ: 35.840.425/0001-93</Text>
           </View>
         </View>
         
@@ -31,7 +31,7 @@ export default function OfferingsScreen() {
           <FontAwesome name="qrcode" size={24} color={Colors.dark.secondary} style={styles.methodIcon} />
           <View style={styles.methodDetails}>
             <Text style={styles.methodTitle}>PIX</Text>
-            <Text style={styles.methodInfo}>Chave CNPJ: 00.000.000/0001-00</Text>
+            <Text style={styles.methodInfo}>Chave CNPJ: 35.840.425/0001-93</Text>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Copiar Chave PIX</Text>
             </TouchableOpacity>

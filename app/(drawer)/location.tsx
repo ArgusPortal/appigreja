@@ -6,7 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 export default function LocationScreen() {
   const openMap = () => {
-    const address = "Igreja Batista Renovada";
+    const address = "Igreja Batista da Cidade";
     const url = `https://maps.google.com/?q=${encodeURIComponent(address)}`;
     Linking.openURL(url);
   };
@@ -27,9 +27,9 @@ export default function LocationScreen() {
           <FontAwesome name="map-marker" size={24} color={Colors.dark.secondary} style={styles.addressIcon} />
           <View style={styles.addressDetails}>
             <Text style={styles.addressTitle}>Endereço</Text>
-            <Text style={styles.addressText}>Rua Exemplo, 123</Text>
-            <Text style={styles.addressText}>Bairro Centro</Text>
-            <Text style={styles.addressText}>Cidade - UF, 12345-678</Text>
+            <Text style={styles.addressText}>Avenida 28 de Março, 1080</Text>
+            <Text style={styles.addressText}>Parque Tamandaré</Text>
+            <Text style={styles.addressText}>Campos dos Goytacazes - RJ</Text>
           </View>
         </View>
         

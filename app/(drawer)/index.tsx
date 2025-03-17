@@ -1,4 +1,4 @@
-import { StyleSheet, ImageBackground, TouchableOpacity, ScrollView, Image, Dimensions, Platform } from 'react-native';
+import { StyleSheet, ImageBackground, TouchableOpacity, ScrollView, Image, Dimensions, Platform, Linking } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome } from '@expo/vector-icons';
@@ -81,25 +81,45 @@ const UpcomingEvent = () => {
 };
 
 // Banner de anúncios para cultos ao vivo
-const LiveBanner = () => (
-  <TouchableOpacity activeOpacity={0.9} style={styles.liveBanner}>
-    <LinearGradient
-      colors={[Colors.dark.accent, Colors.dark.primary]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.liveGradient}
+const LiveBanner = () => {
+  const openYouTubeChannel = async () => {
+    const youtubeUrl = 'https://www.youtube.com/igrejapracidade';
+    try {
+      const supported = await Linking.canOpenURL(youtubeUrl);
+      if (supported) {
+        await Linking.openURL(youtubeUrl);
+      } else {
+        console.log("Não foi possível abrir o URL: " + youtubeUrl);
+      }
+    } catch (error) {
+      console.error("Erro ao abrir o URL:", error);
+    }
+  };
+
+  return (
+    <TouchableOpacity 
+      activeOpacity={0.9} 
+      style={styles.liveBanner}
+      onPress={openYouTubeChannel}
     >
-      <View style={styles.liveBadge}>
-        <Text style={styles.liveText}>AO VIVO</Text>
-      </View>
-      <Text style={styles.liveTitle}>Culto de Domingo</Text>
-      <View style={styles.liveButtonContainer}>
-        <FontAwesome name="play-circle" size={18} color="#fff" style={{marginRight: 6}} />
-        <Text style={styles.liveButtonText}>Assistir agora</Text>
-      </View>
-    </LinearGradient>
-  </TouchableOpacity>
-);
+      <LinearGradient
+        colors={[Colors.dark.accent, Colors.dark.primary]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.liveGradient}
+      >
+        <View style={styles.liveBadge}>
+          <Text style={styles.liveText}>AO VIVO</Text>
+        </View>
+        <Text style={styles.liveTitle}>Culto de Domingo</Text>
+        <View style={styles.liveButtonContainer}>
+          <FontAwesome name="play-circle" size={18} color="#fff" style={{marginRight: 6}} />
+          <Text style={styles.liveButtonText}>Assistir agora</Text>
+        </View>
+      </LinearGradient>
+    </TouchableOpacity>
+  );
+};
 
 export default function HomeScreen() {
   const { navigate } = useSafeNavigation();
@@ -122,7 +142,7 @@ export default function HomeScreen() {
               source={{ uri: 'https://placekitten.com/100/100' }}
               style={styles.churchLogo}
             />
-            <Text style={styles.title}>Igreja Batista Renovada</Text>
+            <Text style={styles.title}>Igreja Batista da Cidade</Text>
             <Text style={styles.subtitle}>Fé, Renovação e Esperança</Text>
           </View>
         </LinearGradient>
