@@ -69,7 +69,7 @@ const churchEvents: ChurchEvent[] = [
     location: 'Comunidade Vila Nova',
     category: 'missões',
     description: 'Atividade evangelística na comunidade Vila Nova. Participe desta importante missão!',
-    image: 'https://images.unsplash.com/photo-1503384999009-6d29ba468f3d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
+    image: 'https://images.unsplash.com/photo-1593113630400-ea4288922497?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
   }
 ];
 
@@ -258,8 +258,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.dark.cardBorder,
   },
   categoryButtonSelected: {
-    backgroundColor: Colors.dark.secondary,
-    borderColor: Colors.dark.secondary,
+    backgroundColor: Colors.dark.primary, // Changed from secondary to primary
+    borderColor: Colors.dark.primary,
   },
   categoryText: {
     color: '#94a3b8',
@@ -267,7 +267,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   categoryTextSelected: {
-    color: '#fff',
+    color: '#FFFFFF', // Explicitly set to white for visibility
+    fontWeight: 'bold', // Added bold for better visibility
   },
   eventsList: {
     padding: 16,
@@ -297,22 +298,22 @@ const styles = StyleSheet.create({
   dateBox: {
     width: 60,
     height: 60,
-    backgroundColor: Colors.dark.primary + '20',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Darker background for better contrast
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 14,
     borderWidth: 1,
-    borderColor: Colors.dark.primary + '40',
+    borderColor: Colors.dark.primary,
   },
   eventDay: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: Colors.dark.primary,
+    color: '#FFFFFF', // Explicit white color for visibility
   },
   eventMonth: {
     fontSize: 14,
-    color: Colors.dark.primary,
+    color: '#FFFFFF', // Explicit white color for visibility
   },
   eventInfo: {
     flex: 1,

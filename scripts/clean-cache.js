@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * Script para limpar os diretórios de cache do Metro e Expo
  * Este script não depende do rimraf estar instalado globalmente

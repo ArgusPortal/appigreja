@@ -44,7 +44,7 @@ export default function OfferingsScreen() {
         </TouchableOpacity>
         
         <Text style={styles.contactText}>
-          Para mais informações sobre contribuições, entre em contato com a tesouraria da igreja pelo telefone (00) 0000-0000.
+          Para mais informações sobre contribuições, entre em contato com a tesouraria da igreja pelo e-mail contato@igrejapracidade.com.br
         </Text>
       </View>
     </ScrollView>

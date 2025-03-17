@@ -18,7 +18,8 @@ export default function LocationScreen() {
         <Text style={styles.subtitle}>Venha nos visitar</Text>
         
         <Image 
-          source={{ uri: 'https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&key=YOUR_API_KEY' }}
+          source={{ uri: 'https://maps.googleapis.com/maps/api/staticmap?center=Avenida+28+de+Março,+1080,+Parque+Tamandaré,+Campos+dos+Goytacazes+-+RJ&zoom=15&size=600x300&maptype=roadmap&markers=color:red%7CAvenida+28+de+Março,+1080,+Parque+Tamandaré,+Campos+dos+Goytacazes+-+RJ&key=YOUR_API_KEY',
+ }}
           style={styles.mapImage}
           resizeMode="cover"
         />
@@ -76,8 +77,7 @@ export default function LocationScreen() {
         
         <View style={styles.contactInfo}>
           <Text style={styles.contactTitle}>Contato</Text>
-          <Text style={styles.contactText}><FontAwesome name="phone" size={16} color="#888888" /> (00) 0000-0000</Text>
-          <Text style={styles.contactText}><FontAwesome name="envelope" size={16} color="#888888" /> contato@igrejabr.com</Text>
+          <Text style={styles.contactText}><FontAwesome name="envelope" size={16} color="#888888" /> contato@igrejapracidade.com.br</Text>
         </View>
       </View>
     </ScrollView>

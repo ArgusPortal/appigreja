@@ -1,4 +1,4 @@
-// MUST LOAD FIRST: Event blocker to prevent "topInsetsChange" errors
+// MUST LOAD FIRST: Error suppression for text rendering issues
 import './BlockEvents';
 import React from 'react';
 import { View, Text, Platform, LogBox } from 'react-native';
