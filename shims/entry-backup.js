@@ -1,10 +1,22 @@
 /**
- * Arquivo de entrada personalizado que serve como ponte para o expo-router
- * Criado em: 2025-03-16T23:13:59.814Z
+ * DO NOT DELETE OR MODIFY THIS FILE - CRITICAL FOR APP STARTUP
+ * Entry point file with proper React component default export
+ * Created by fix-entry-permanent.js on 2025-03-17T23:03:50.496Z
  */
+import React from 'react';
+import { View } from 'react-native';
 
-// Redirecionando para o entry do expo-router
-module.exports = require('expo-router/entry-classic');
+// Import expo-router entry point
+import 'expo-router/entry-classic';
 
-// Importamos diretamente desta forma para garantir que o Metro possa resolver o módulo
-require('expo-router');
+// We MUST export a valid React component as the default export
+// This is required by Expo Router and will prevent the
+// "Route './entry.js' is missing the required default export" error
+export default function AppEntry() {
+  // This component won't actually be rendered, but must be present
+  return <View />;
+}
+
+// Add a special marker that metro.config.js can check for
+// to avoid overwriting this file
+// DO NOT REMOVE THIS LINE: VALID_DEFAULT_EXPORT

@@ -55,7 +55,7 @@ const MinistryCard = ({ title, description, image, leader }: MinistryCardProps) 
     <Image 
       source={{ uri: image }} 
       style={styles.cardImage}
-      defaultSource={require('@/assets/images/placeholder.png')}
+      // Removed defaultSource to fix the bundling error
     />
     <LinearGradient
       colors={['rgba(0,0,0,0.9)', 'rgba(0,0,0,0.7)']} // Darker gradient for better contrast
@@ -87,7 +87,7 @@ const BirthdayCard = ({ name, date, image }: BirthdayCardProps) => (
     <Image 
       source={{ uri: image }} 
       style={styles.birthdayAvatar}
-      defaultSource={require('@/assets/images/adaptive-icon.png')}
+      // Removed defaultSource to fix the bundling error
     />
     <View style={styles.birthdayInfo}>
       <Text style={styles.birthdayName}>{name}</Text>
@@ -105,7 +105,7 @@ const CommunityGroup = ({ name, members, meetingTime, image }: CommunityGroupPro
     <Image 
       source={{ uri: image }} 
       style={styles.groupImage}
-      defaultSource={require('@/assets/images/adaptive-icon.png')}  
+      // Removed defaultSource to fix the bundling error
     />
     <View style={styles.groupContent}>
       <Text style={styles.groupName}>{name}</Text>
@@ -331,6 +331,7 @@ const styles = StyleSheet.create({
   cardImage: {
     width: '100%',
     height: '100%',
+    backgroundColor: '#222', // Fallback background color for images
   },
   cardOverlay: {
     position: 'absolute',
@@ -406,6 +407,7 @@ const styles = StyleSheet.create({
   groupImage: {
     width: 80,
     height: 80,
+    backgroundColor: '#222', // Fallback background color
   },
   groupContent: {
     flex: 1,
@@ -450,6 +452,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
+    backgroundColor: '#333', // Fallback background color
   },
   birthdayInfo: {
     flex: 1,
