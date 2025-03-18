@@ -80,40 +80,41 @@ O projeto segue uma arquitetura de módulos bem definida:
    - Informações sobre a comunidade
 
 ## Estrutura do Projeto
-
+```plaintext
 appigreja/
 ├── app/ # Diretório de rotas (Expo Router)
-│ ├── (drawer)/ # Rotas do menu lateral
-│ │ ├── _layout.tsx # Layout comum para drawer
-│ │ ├── index.tsx # Tela inicial
-│ │ ├── bible.tsx # Bíblia
-│ │ ├── two.tsx # Eventos
-│ │ ├── community.tsx # Comunidade
-│ │ ├── devotional.tsx # Devocional
-│ │ ├── offerings.tsx # Ofertas│ │ └── location.tsx # Localização
+│   ├── (drawer)/ # Rotas do menu lateral
+│   │   ├── _layout.tsx # Layout comum para drawer
+│   │   ├── index.tsx # Tela inicial
+│   │   ├── bible.tsx # Bíblia
+│   │   ├── two.tsx # Eventos
+│   │   ├── community.tsx # Comunidade
+│   │   ├── devotional.tsx # Devocional
+│   │   ├── offerings.tsx # Ofertas
+│   │   └── location.tsx # Localização
 ├── assets/ # Recursos estáticos
-│ ├── images/ # Imagens da aplicação
-│ │ ├── icon.png # Ícone do aplicativo
-│ │ ├── splash-icon.png # Imagem de splash
-│ │ ├── adaptive-icon.png # Ícone adaptativo para Android
-│ │ └── favicon.png # Favicon para web
+│   ├── images/ # Imagens da aplicação
+│   │   ├── icon.png # Ícone do aplicativo
+│   │   ├── splash-icon.png # Imagem de splash
+│   │   ├── adaptive-icon.png # Ícone adaptativo para Android
+│   │   └── favicon.png # Favicon para web
 ├── components/ # Componentes reutilizáveis
-│ ├── SimpleSafeArea.js # Implementação personalizada de SafeArea
-│ └── Themed.tsx # Componentes com tema
+│   ├── SimpleSafeArea.js # Implementação personalizada de SafeArea
+│   └── Themed.tsx # Componentes com tema
 ├── constants/ # Constantes da aplicação
-│ ├── Colors.ts # Definição de cores
-│ └── Layout.ts # Constantes de layout
+│   ├── Colors.ts # Definição de cores
+│   └── Layout.ts # Constantes de layout
 ├── utils/ # Funções utilitárias
-│ └── androidBackHandler.ts # Gerenciamento do botão voltar
+│   └── androidBackHandler.ts # Gerenciamento do botão voltar
 ├── shims/ # Polyfills e correções
-│ ├── babel-helpers-objectWithoutProperties.js
-│ ├── babel-runtime-shim.js
-│ ├── empty-module.js
-│ ├── expo-linking-shim.js
-│ ├── expo-router-error.js
-│ ├── global-event-suppressor.js
-│ ├── react-native-shim.js
-│ └── safe-area-polyfill.js
+│   ├── babel-helpers-objectWithoutProperties.js
+│   ├── babel-runtime-shim.js
+│   ├── empty-module.js
+│   ├── expo-linking-shim.js
+│   ├── expo-router-error.js
+│   ├── global-event-suppressor.js
+│   ├── react-native-shim.js
+│   └── safe-area-polyfill.js
 ├── scripts/ # Scripts de automação
 ├── patches/ # Patches para correção de bibliotecas
 ├── BlockEvents.js # Interceptador de eventos problemáticos
@@ -129,6 +130,7 @@ appigreja/
 ├── .watchmanconfig # Configuração do Watchman
 ├── tsconfig.json # Configuração do TypeScript
 └── package.json # Dependências e scripts
+```
 
 ## Implementação Técnica e Desafios
 
