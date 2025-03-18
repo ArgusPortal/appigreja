@@ -81,6 +81,55 @@ O projeto segue uma arquitetura de módulos bem definida:
 
 ## Estrutura do Projeto
 
+appigreja/
+├── app/ # Diretório de rotas (Expo Router)
+│ ├── (drawer)/ # Rotas do menu lateral
+│ │ ├── _layout.tsx # Layout comum para drawer
+│ │ ├── index.tsx # Tela inicial
+│ │ ├── bible.tsx # Bíblia
+│ │ ├── two.tsx # Eventos
+│ │ ├── community.tsx # Comunidade
+│ │ ├── devotional.tsx # Devocional
+│ │ ├── offerings.tsx # Ofertas│ │ └── location.tsx # Localização
+├── assets/ # Recursos estáticos
+│ ├── images/ # Imagens da aplicação
+│ │ ├── icon.png # Ícone do aplicativo
+│ │ ├── splash-icon.png # Imagem de splash
+│ │ ├── adaptive-icon.png # Ícone adaptativo para Android
+│ │ └── favicon.png # Favicon para web
+├── components/ # Componentes reutilizáveis
+│ ├── SimpleSafeArea.js # Implementação personalizada de SafeArea
+│ └── Themed.tsx # Componentes com tema
+├── constants/ # Constantes da aplicação
+│ ├── Colors.ts # Definição de cores
+│ └── Layout.ts # Constantes de layout
+├── utils/ # Funções utilitárias
+│ └── androidBackHandler.ts # Gerenciamento do botão voltar
+├── shims/ # Polyfills e correções
+│ ├── babel-helpers-objectWithoutProperties.js
+│ ├── babel-runtime-shim.js
+│ ├── empty-module.js
+│ ├── expo-linking-shim.js
+│ ├── expo-router-error.js
+│ ├── global-event-suppressor.js
+│ ├── react-native-shim.js
+│ └── safe-area-polyfill.js
+├── scripts/ # Scripts de automação
+├── patches/ # Patches para correção de bibliotecas
+├── BlockEvents.js # Interceptador de eventos problemáticos
+├── DeepEventSuppressor.js # Supressor profundo de eventos
+├── EventBlocker.js # Bloqueador de eventos
+├── GlobalErrorHandler.js # Tratamento global de erros
+├── app.config.js # Configuração para o Expo
+├── app.json # Configuração do Expo em formato JSON
+├── entry.js # Ponto de entrada para o Expo Router
+├── metro.config.js # Configuração do Metro bundler
+├── diversos scripts de execução (.js)
+├── .babelrc.js # Configuração do Babel
+├── .watchmanconfig # Configuração do Watchman
+├── tsconfig.json # Configuração do TypeScript
+└── package.json # Dependências e scripts
+
 ## Implementação Técnica e Desafios
 
 ### Sistema de Navegação
