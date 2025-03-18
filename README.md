@@ -80,7 +80,7 @@ O projeto segue uma arquitetura de módulos bem definida:
    - Informações sobre a comunidade
 
 ## Estrutura do Projeto
-
+```plaintext
 appigreja/
 ├── app/ # Diretório de rotas (Expo Router)
 │ ├── (drawer)/ # Rotas do menu lateral
@@ -128,7 +128,8 @@ appigreja/
 ├── .babelrc.js # Configuração do Babel
 ├── .watchmanconfig # Configuração do Watchman
 ├── tsconfig.json # Configuração do TypeScript
-└── package.json # Dependências e scripts
+└── package.json # Dependências e scripts 
+```
 
 ## Implementação Técnica e Desafios
 
@@ -166,7 +167,6 @@ O aplicativo implementa um sistema em camadas para tratamento de erros:
 - XCode (para emulador iOS, apenas em macOS)
 - Expo CLI (opcional)
 
-### Instalação
 
 ## Conclusão e Aprendizados
 O desenvolvimento deste aplicativo proporcionou importante experiência prática com o ecossistema React Native/Expo, abordando desafios reais do desenvolvimento mobile multiplataforma. Os principais aprendizados incluem:
